@@ -2,6 +2,8 @@ package fuzs.slotcycler.client.handler;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import fuzs.slotcycler.SlotCycler;
+import fuzs.slotcycler.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GameRenderer;
@@ -22,6 +24,7 @@ public class SlotRendererHandler {
             RenderSystem.defaultBlendFunc();
             RenderSystem.disableDepthTest();
             if (minecraft.gameMode.getPlayerMode() != GameType.SPECTATOR) {
+                if (SlotCycler.CONFIG.get(ClientConfig.class).hideSlotsDisplay) return;
                 renderAdditionalHotbar(minecraft, gui, matrixStack, tickDelta, screenWidth, screenHeight);
             }
         }
@@ -30,6 +33,7 @@ public class SlotRendererHandler {
     private static void renderAdditionalHotbar(Minecraft minecraft, Gui gui, PoseStack poseStack, float partialTicks, int screenWidth, int screenHeight) {
         Player player = getCameraPlayer(minecraft);
         if (player != null) {
+            screenHeight -= SlotCycler.CONFIG.get(ClientConfig.class).slotsOffset;
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
