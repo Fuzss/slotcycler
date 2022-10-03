@@ -1,6 +1,8 @@
 package fuzs.slotcycler.client.handler;
 
+import fuzs.slotcycler.SlotCycler;
 import fuzs.slotcycler.client.init.ClientModRegistry;
+import fuzs.slotcycler.config.ClientConfig;
 import fuzs.slotcycler.util.SlotUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
@@ -8,8 +10,10 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.ItemStack;
 
 public class KeyBindingHandler {
+    public static int cycleSlotsDisplay;
 
     public static void onClientTick$Start(Minecraft minecraft) {
+        if (cycleSlotsDisplay > 0) cycleSlotsDisplay--;
         if (minecraft.getOverlay() == null && (minecraft.screen == null || minecraft.screen.passEvents)) {
             handleKeybinds(minecraft.player);
         }
@@ -22,6 +26,7 @@ public class KeyBindingHandler {
                     // not sure if this actually does something client-side
                     player.stopUsingItem();
                     setPopTimeColumn(player);
+                    cycleSlotsDisplay = 15;
                 }
             }
         }
@@ -31,8 +36,12 @@ public class KeyBindingHandler {
                     // not sure if this actually does something client-side
                     player.stopUsingItem();
                     setPopTimeColumn(player);
+                    cycleSlotsDisplay = 15;
                 }
             }
+        }
+        if (SlotCycler.CONFIG.get(ClientConfig.class).scrollingModifierKey.active()) {
+            cycleSlotsDisplay = 15;
         }
     }
 

@@ -3,6 +3,7 @@ package fuzs.slotcycler.client.handler;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import fuzs.slotcycler.SlotCycler;
+import fuzs.slotcycler.client.core.ClientModServices;
 import fuzs.slotcycler.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -24,16 +25,23 @@ public class SlotRendererHandler {
             RenderSystem.defaultBlendFunc();
             RenderSystem.disableDepthTest();
             if (minecraft.gameMode.getPlayerMode() != GameType.SPECTATOR) {
-                if (SlotCycler.CONFIG.get(ClientConfig.class).hideSlotsDisplay) return;
+                if (SlotCycler.CONFIG.get(ClientConfig.class).slotsDisplayState == ClientConfig.SlotsDisplayState.NEVER) return;
                 renderAdditionalHotbar(minecraft, gui, matrixStack, tickDelta, screenWidth, screenHeight);
             }
         }
     }
 
     private static void renderAdditionalHotbar(Minecraft minecraft, Gui gui, PoseStack poseStack, float partialTicks, int screenWidth, int screenHeight) {
+        if (SlotCycler.CONFIG.get(ClientConfig.class).slotsDisplayState == ClientConfig.SlotsDisplayState.KEY && KeyBindingHandler.cycleSlotsDisplay == 0) return;
         Player player = getCameraPlayer(minecraft);
         if (player != null) {
+            final int originalScreenHeight = screenHeight;
             screenHeight -= SlotCycler.CONFIG.get(ClientConfig.class).slotsOffset;
+            // support Raised mod natively on Fabric
+            screenHeight -= ClientModServices.ABSTRACTIONS.getRaisedDistance();
+            if (SlotCycler.CONFIG.get(ClientConfig.class).slotsDisplayState == ClientConfig.SlotsDisplayState.KEY) {
+                screenHeight += (originalScreenHeight - screenHeight + 23) * (1.0F - Math.min(1.0F, (KeyBindingHandler.cycleSlotsDisplay - partialTicks) / 5.0F));
+            }
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
