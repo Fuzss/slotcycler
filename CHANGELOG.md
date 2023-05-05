@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog].
 
+## [v4.0.3-1.19.2] - 2022-05-05
+### Added
+- Pressing a hotbar key when the corresponding slot is already selected now also cycles the slots, this can be inverted by holding the scrolling modifier key (`Alt` by default)
+- Added a config option for shifting the slots display horizontally in addition to vertically
+
 ## [v4.0.2-1.19.2] - 2022-10-03
 ### Added
 - Added built-in support for [Raised] on Fabric

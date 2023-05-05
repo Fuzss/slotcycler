@@ -7,6 +7,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(MouseHandler.class)
 public interface MouseHandlerAccessor {
 
-    @Accessor
-    double getAccumulatedScroll();
+    @Accessor("accumulatedScroll")
+    double slotcycler$getAccumulatedScroll();
 }

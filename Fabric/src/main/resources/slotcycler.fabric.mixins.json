@@ -7,7 +7,7 @@
   "mixins": [
   ],
   "client": [
-    "client.MouseHandlerMixin"
+    "client.MouseHandlerFabricMixin"
   ],
   "injectors": {
     "defaultRequire": 1

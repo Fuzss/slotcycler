@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class SlotUtil {
+
     public static int cycleHotbarSlotLeft(Player player) {
         return cycleSlotLeft(player, player.getInventory().selected);
     }
@@ -81,7 +82,9 @@ public class SlotUtil {
         items.set(currentSlot, itemstack);
     }
 
+    @FunctionalInterface
     public interface SlotSwapper {
+
         void swapSlots(Player player, int currentSlot, int nextSlot);
     }
 }

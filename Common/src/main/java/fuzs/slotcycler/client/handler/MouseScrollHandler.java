@@ -15,8 +15,8 @@ public class MouseScrollHandler {
     public static Optional<Unit> onMouseScroll(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
-        if (!player.isSpectator() && SlotCycler.CONFIG.get(ClientConfig.class).scrollingModifierKey.active()) {
-            double totalScroll = verticalAmount + ((MouseHandlerAccessor) minecraft.mouseHandler).getAccumulatedScroll();
+        if (!player.isSpectator() && SlotCycler.CONFIG.get(ClientConfig.class).scrollingModifierKey.isActive()) {
+            double totalScroll = verticalAmount + ((MouseHandlerAccessor) minecraft.mouseHandler).slotcycler$getAccumulatedScroll();
             if (totalScroll > 0.0) {
                 if (SlotUtil.cycleSlotsLeft(player, KeyBindingHandler::swapSlots)) {
                     KeyBindingHandler.setPopTimeColumn(player);
