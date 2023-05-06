@@ -1,7 +1,7 @@
 package fuzs.slotcycler.config;
 
-import fuzs.puzzleslib.config.ConfigCore;
-import fuzs.puzzleslib.config.annotation.Config;
+import fuzs.puzzleslib.api.config.v3.Config;
+import fuzs.puzzleslib.api.config.v3.ConfigCore;
 
 public class ClientConfig implements ConfigCore {
     @Config(description = {"Modifier key required to be held to allow for scrolling through cycle slots.", "Setting to \"NONE\" will overwrite vanilla hotbar scrolling, making the hotbar only usable with keys."})

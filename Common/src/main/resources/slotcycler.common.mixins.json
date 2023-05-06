@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "package": "fuzs.slotcycler.mixin",
   "refmap": "slotcycler.refmap.json",
+  "plugin": "fuzs.slotcycler.mixin.ModMixinConfigPlugin",
   "mixins": [
   ],
   "client": [

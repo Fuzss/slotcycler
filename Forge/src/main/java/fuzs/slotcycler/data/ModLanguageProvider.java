@@ -1,17 +1,18 @@
 package fuzs.slotcycler.data;
 
-import net.minecraft.data.DataGenerator;
-import net.minecraftforge.common.data.LanguageProvider;
+import fuzs.puzzleslib.api.data.v1.AbstractLanguageProvider;
+import fuzs.slotcycler.client.handler.KeyBindingHandler;
+import net.minecraft.data.PackOutput;
 
-public class ModLanguageProvider extends LanguageProvider {
+public class ModLanguageProvider extends AbstractLanguageProvider {
 
-    public ModLanguageProvider(DataGenerator gen, String modId) {
-        super(gen, modId, "en_us");
+    public ModLanguageProvider(PackOutput packOutput, String modId) {
+        super(packOutput, modId);
     }
 
     @Override
     protected void addTranslations() {
-        this.add("key.cycleLeft", "Cycle Hotbar Slot Left");
-        this.add("key.cycleRight", "Cycle Hotbar Slot Right");
+        this.add(KeyBindingHandler.CYCLE_LEFT_KEY_MAPPING, "Cycle Hotbar Slot Left");
+        this.add(KeyBindingHandler.CYCLE_RIGHT_KEY_MAPPING, "Cycle Hotbar Slot Right");
     }
 }

@@ -1,10 +1,11 @@
 package fuzs.slotcycler.client.handler;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import fuzs.slotcycler.SlotCycler;
-import fuzs.slotcycler.client.init.ClientModRegistry;
 import fuzs.slotcycler.config.ClientConfig;
 import fuzs.slotcycler.config.ModifierKey;
 import fuzs.slotcycler.util.SlotUtil;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.world.entity.player.Inventory;
@@ -15,7 +16,10 @@ import net.minecraft.world.item.ItemStack;
 import java.util.function.BiPredicate;
 
 public class KeyBindingHandler {
+    public static final KeyMapping CYCLE_LEFT_KEY_MAPPING = new KeyMapping("key.cycleLeft", InputConstants.KEY_G, "key.categories.inventory");
+    public static final KeyMapping CYCLE_RIGHT_KEY_MAPPING = new KeyMapping("key.cycleRight", InputConstants.KEY_H, "key.categories.inventory");
     private static final int DEFAULT_SLOTS_DISPLAY_TICKS = 15;
+
     private static int slotsDisplayTicks;
 
     public static void onClientTick$Start(Minecraft minecraft) {
@@ -27,10 +31,10 @@ public class KeyBindingHandler {
     }
 
     private static void handleModKeybinds(Player player) {
-        while (ClientModRegistry.CYCLE_LEFT_KEY_MAPPING.consumeClick()) {
+        while (CYCLE_LEFT_KEY_MAPPING.consumeClick()) {
             cycleSlots(player, SlotUtil::cycleSlotsLeft);
         }
-        while (ClientModRegistry.CYCLE_RIGHT_KEY_MAPPING.consumeClick()) {
+        while (CYCLE_RIGHT_KEY_MAPPING.consumeClick()) {
             cycleSlots(player, SlotUtil::cycleSlotsRight);
         }
         if (SlotCycler.CONFIG.get(ClientConfig.class).scrollingModifierKey.isActive()) {

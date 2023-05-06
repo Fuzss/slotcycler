@@ -1,12 +1,12 @@
 package fuzs.slotcycler;
 
-import fuzs.puzzleslib.core.CoreServices;
+import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import net.fabricmc.api.ModInitializer;
 
 public class SlotCyclerFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        CoreServices.FACTORIES.modConstructor(SlotCycler.MOD_ID).accept(new SlotCycler());
+        ModConstructor.construct(SlotCycler.MOD_ID, SlotCycler::new);
     }
 }

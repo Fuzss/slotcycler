@@ -2,11 +2,11 @@ package fuzs.slotcycler.client.handler;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
 import fuzs.slotcycler.SlotCycler;
-import fuzs.slotcycler.client.core.ClientModServices;
 import fuzs.slotcycler.config.ClientConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
@@ -17,22 +17,20 @@ import net.minecraft.world.level.GameType;
 
 public class SlotRendererHandler {
     private static final ResourceLocation WIDGETS_LOCATION = new ResourceLocation("textures/gui/widgets.png");
+    private static final ResourceLocation RAISED_DISTANCE = new ResourceLocation("raised", "distance");
 
-    public static void onHudRender(Gui gui, PoseStack matrixStack, float tickDelta, int screenWidth, int screenHeight) {
-        Minecraft minecraft = Minecraft.getInstance();
-        if (!minecraft.options.hideGui) {
-            if (minecraft.gameMode.getPlayerMode() != GameType.SPECTATOR) {
-                if (SlotCycler.CONFIG.get(ClientConfig.class).slotsDisplayState != ClientConfig.SlotsDisplayState.NEVER) {
-                    RenderSystem.enableBlend();
-                    RenderSystem.defaultBlendFunc();
-                    RenderSystem.disableDepthTest();
-                    renderAdditionalHotbar(minecraft, gui, matrixStack, tickDelta, screenWidth, screenHeight);
-                }
+    public static void onHudRender(Minecraft minecraft, PoseStack poseStack, float tickDelta, int screenWidth, int screenHeight) {
+        if (!minecraft.options.hideGui && minecraft.gameMode.getPlayerMode() != GameType.SPECTATOR) {
+            if (SlotCycler.CONFIG.get(ClientConfig.class).slotsDisplayState != ClientConfig.SlotsDisplayState.NEVER) {
+                RenderSystem.enableBlend();
+                RenderSystem.defaultBlendFunc();
+                RenderSystem.disableDepthTest();
+                renderAdditionalHotbar(minecraft, poseStack, tickDelta, screenWidth, screenHeight);
             }
         }
     }
 
-    private static void renderAdditionalHotbar(Minecraft minecraft, Gui gui, PoseStack poseStack, float partialTicks, final int screenWidth, final int screenHeight) {
+    private static void renderAdditionalHotbar(Minecraft minecraft, PoseStack poseStack, float partialTicks, int screenWidth, int screenHeight) {
 
         if (KeyBindingHandler.getSlotsDisplayTicks() == 0 && SlotCycler.CONFIG.get(ClientConfig.class).slotsDisplayState == ClientConfig.SlotsDisplayState.KEY) {
             return;
@@ -44,7 +42,7 @@ public class SlotRendererHandler {
         int posY = screenHeight;
         posY -= SlotCycler.CONFIG.get(ClientConfig.class).slotsYOffset;
         // support Raised mod natively on Fabric
-        posY -= ClientModServices.ABSTRACTIONS.getRaisedDistance();
+        posY -= ModLoaderEnvironment.INSTANCE.getObjectShareAccess().<Integer>getOptional(RAISED_DISTANCE).orElse(0);
         if (SlotCycler.CONFIG.get(ClientConfig.class).slotsDisplayState == ClientConfig.SlotsDisplayState.KEY) {
             posY += (screenHeight - posY + 23) * (1.0F - Math.min(1.0F, (KeyBindingHandler.getSlotsDisplayTicks() - partialTicks) / 5.0F));
         }
@@ -82,19 +80,19 @@ public class SlotRendererHandler {
         int posX = screenWidth / 2;
         posX += (91 + SlotCycler.CONFIG.get(ClientConfig.class).slotsXOffset) * (renderToRight ? 1 : -1);
         if (renderToRight) {
-            gui.blit(poseStack, posX, posY - 23, 53, 22, 29, 24);
+            GuiComponent.blit(poseStack, posX, posY - 23, 53, 22, 29, 24, 256, 256);
             if (!rightStack.isEmpty()) {
-                gui.blit(poseStack, posX + 40, posY - 23, 53, 22, 29, 24);
+                GuiComponent.blit(poseStack, posX + 40, posY - 23, 53, 22, 29, 24, 256, 256);
             }
-            gui.blit(poseStack, posX + 28, posY - 22, 21, 0, 20, 22);
-            gui.blit(poseStack, posX + 26, posY - 22 - 1, 0, 22, 24, 24);
+            GuiComponent.blit(poseStack, posX + 28, posY - 22, 21, 0, 20, 22, 256, 256);
+            GuiComponent.blit(poseStack, posX + 26, posY - 22 - 1, 0, 22, 24, 24, 256, 256);
         } else {
             if (!leftStack.isEmpty()) {
-                gui.blit(poseStack, posX - 29 - 40, posY - 23, 24, 22, 29, 24);
+                GuiComponent.blit(poseStack, posX - 29 - 40, posY - 23, 24, 22, 29, 24, 256, 256);
             }
-            gui.blit(poseStack, posX - 29, posY - 23, 24, 22, 29, 24);
-            gui.blit(poseStack, posX - 29 - 19, posY - 22, 21, 0, 20, 22);
-            gui.blit(poseStack, posX - 29 - 21, posY - 22 - 1, 0, 22, 24, 24);
+            GuiComponent.blit(poseStack, posX - 29, posY - 23, 24, 22, 29, 24, 256, 256);
+            GuiComponent.blit(poseStack, posX - 29 - 19, posY - 22, 21, 0, 20, 22, 256, 256);
+            GuiComponent.blit(poseStack, posX - 29 - 21, posY - 22 - 1, 0, 22, 24, 24, 256, 256);
         }
 
         posY -= 16 + 3;
