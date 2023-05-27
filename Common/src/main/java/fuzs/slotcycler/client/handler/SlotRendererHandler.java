@@ -97,13 +97,13 @@ public class SlotRendererHandler {
 
         posY -= 16 + 3;
         if (renderToRight) {
-            renderItemInSlot(minecraft, posX + 10, posY, partialTicks, player, leftStack);
-            renderItemInSlot(minecraft, posX + 10 + 20, posY, partialTicks, player, mainStack);
-            renderItemInSlot(minecraft, posX + 10 + 20 + 20, posY, partialTicks, player, rightStack);
+            renderItemInSlot(minecraft, poseStack, posX + 10, posY, partialTicks, player, leftStack);
+            renderItemInSlot(minecraft, poseStack, posX + 10 + 20, posY, partialTicks, player, mainStack);
+            renderItemInSlot(minecraft, poseStack, posX + 10 + 20 + 20, posY, partialTicks, player, rightStack);
         } else {
-            renderItemInSlot(minecraft, posX - 26, posY, partialTicks, player, rightStack);
-            renderItemInSlot(minecraft, posX - 26 - 20, posY, partialTicks, player, mainStack);
-            renderItemInSlot(minecraft, posX - 26 - 20 - 20, posY, partialTicks, player, leftStack);
+            renderItemInSlot(minecraft, poseStack, posX - 26, posY, partialTicks, player, rightStack);
+            renderItemInSlot(minecraft, poseStack, posX - 26 - 20, posY, partialTicks, player, mainStack);
+            renderItemInSlot(minecraft, poseStack, posX - 26 - 20 - 20, posY, partialTicks, player, leftStack);
         }
     }
 
@@ -135,7 +135,7 @@ public class SlotRendererHandler {
         return !(minecraft.getCameraEntity() instanceof Player) ? null : (Player) minecraft.getCameraEntity();
     }
 
-    private static void renderItemInSlot(Minecraft minecraft, int posX, int posY, float partialTicks, Player player, ItemStack stack) {
+    private static void renderItemInSlot(Minecraft minecraft, PoseStack poseStack, int posX, int posY, float partialTicks, Player player, ItemStack stack) {
         if (stack.isEmpty()) return;
         PoseStack posestack = RenderSystem.getModelViewStack();
         float f = (float) stack.getPopTime() - partialTicks;
@@ -147,12 +147,12 @@ public class SlotRendererHandler {
             posestack.translate(-(posX + 8), -(posY + 12), 0.0D);
             RenderSystem.applyModelViewMatrix();
         }
-        minecraft.getItemRenderer().renderAndDecorateItem(player, stack, posX, posY, 0);
+        minecraft.getItemRenderer().renderAndDecorateItem(poseStack, player, stack, posX, posY, 0);
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         if (f > 0.0F) {
             posestack.popPose();
             RenderSystem.applyModelViewMatrix();
         }
-        minecraft.getItemRenderer().renderGuiItemDecorations(minecraft.font, stack, posX, posY);
+        minecraft.getItemRenderer().renderGuiItemDecorations(poseStack, minecraft.font, stack, posX, posY);
     }
 }

@@ -24,6 +24,6 @@ public class SlotCyclerClient implements ClientModConstructor {
 
     @Override
     public void onRegisterKeyMappings(KeyMappingsContext context) {
-        context.registerKeyMappings(KeyBindingHandler.CYCLE_LEFT_KEY_MAPPING, KeyBindingHandler.CYCLE_RIGHT_KEY_MAPPING);
+        context.registerKeyMapping(KeyBindingHandler.CYCLE_LEFT_KEY_MAPPING, KeyBindingHandler.CYCLE_RIGHT_KEY_MAPPING);
     }
 }
