@@ -24,7 +24,7 @@ public class KeyBindingHandler {
 
     public static void onClientTick$Start(Minecraft minecraft) {
         if (slotsDisplayTicks > 0) slotsDisplayTicks--;
-        if (minecraft.getOverlay() == null && (minecraft.screen == null || minecraft.screen.passEvents) && !minecraft.player.isSpectator()) {
+        if (minecraft.getOverlay() == null && minecraft.screen == null && !minecraft.player.isSpectator()) {
             handleModKeybinds(minecraft.player);
             handleHotbarKeybinds(minecraft.player, minecraft.options);
         }
