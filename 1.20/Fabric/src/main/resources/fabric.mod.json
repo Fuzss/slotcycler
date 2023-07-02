@@ -31,13 +31,13 @@
   },
 
   "mixins": [
-    "${modId}.common.mixins.json"
   ],
 
   "depends": {
     "fabricloader": ">=${minFabricVersion}",
     "fabric-api": ">=${minFabricApiVersion}",
     "puzzleslib": ">=${minPuzzlesVersion}",
+    "puzzlesapi": "*",
     "minecraft": "${minecraftVersion}",
     "java": ">=17"
   }

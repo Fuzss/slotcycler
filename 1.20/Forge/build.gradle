@@ -6,6 +6,15 @@ dependencies {
     // Puzzles Lib
     api fg.deobf(libs.puzzleslib.forge.get())
 
+    // Puzzles Api
+    api(fg.deobf(libs.puzzlesapi.forge.get())) {
+        exclude group: "fuzs.puzzleslib"
+    }
+    jarJar(fg.deobf(libs.puzzlesapi.forge.get()) {
+        jarJar.ranged(it, "[${libs.versions.puzzlesapi.get()},)")
+        transitive = false
+    })
+
     // Quality of Life Mods
     versionCatalog.findLibrary("bettermodsbutton.forge").ifPresent {
         runtimeOnly fg.deobf(it.get())

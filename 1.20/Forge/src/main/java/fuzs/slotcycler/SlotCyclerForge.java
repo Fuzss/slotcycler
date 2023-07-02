@@ -1,7 +1,6 @@
 package fuzs.slotcycler;
 
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
-import fuzs.slotcycler.data.ModLanguageProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -28,6 +27,5 @@ public class SlotCyclerForge {
         final PackOutput packOutput = dataGenerator.getPackOutput();
         final CompletableFuture<HolderLookup.Provider> lookupProvider = evt.getLookupProvider();
         final ExistingFileHelper fileHelper = evt.getExistingFileHelper();
-        dataGenerator.addProvider(true, new ModLanguageProvider(packOutput, SlotCycler.MOD_ID));
     }
 }
