@@ -1,6 +1,7 @@
-package fuzs.slotcycler;
+package fuzs.slotcycler.forge;
 
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
+import fuzs.slotcycler.SlotCycler;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;

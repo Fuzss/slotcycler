@@ -1,14 +1,15 @@
-package fuzs.slotcycler.client;
+package fuzs.slotcycler.neoforge.client;
 
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.slotcycler.SlotCycler;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
+import fuzs.slotcycler.client.SlotCyclerClient;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 
 @Mod.EventBusSubscriber(modid = SlotCycler.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class SlotCyclerForgeClient {
+public class SlotCyclerNeoForgeClient {
 
     @SubscribeEvent
     public static void onConstructMod(final FMLConstructModEvent evt) {
