@@ -7,3 +7,9 @@ dependencies {
     // Hotbar Slot Cycling
     modApi(include(libs.hotbarslotcycling.neoforge.get()))
 }
+
+tasks.withType(net.fabricmc.loom.task.AbstractRunTask).configureEach {
+    doFirst {
+        patchLaunchCfg()
+    }
+}
