@@ -8,6 +8,3 @@ dependencies {
     modApi libs.hotbarslotcycling.common
 }
 
-tasks.withType(net.fabricmc.loom.task.AbstractRemapJarTask).configureEach {
-    targetNamespace = "named"
-}
